@@ -29,3 +29,5 @@ recruitment_test-*.tar
 .env
 .env.development
 
+.elixir_ls/
+

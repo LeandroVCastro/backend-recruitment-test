@@ -68,3 +68,17 @@ To start your `Phoenix` server:
 ## Any questions?
 
 Please contact us by email at `tecnologia@hubscontabilidade.com.br`. We do not promise to be able to answer all questions, but we will do our best to get back to you as quickly as possible.
+
+## How to run
+
+#### Running
+
+```bash
+docker compose up --build
+```
+
+#### Stopping
+
+```bash
+docker compose down
+```

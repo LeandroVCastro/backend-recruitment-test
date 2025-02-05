@@ -1,13 +1,10 @@
 defmodule RecruitmentTestWeb.Schema do
   use Absinthe.Schema
-  import_types(RecruitmentTestWeb.Schema.ContentTypes)
-
-  alias RecruitmentTestWeb.Resolvers
+  import_types(RecruitmentTestWeb.Schema.Queries.HelloWorldQueries)
+  import_types(RecruitmentTestWeb.Schema.Queries.EnterpriseQueries)
 
   query do
-    @desc "Returns a Hello World message"
-    field :hello_world, :string do
-      resolve(&Resolvers.HelloWorld.get/3)
-    end
+    import_fields(:hello_world_queries)
+    import_fields(:enterprise_queries)
   end
 end

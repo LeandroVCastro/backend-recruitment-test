@@ -19,5 +19,21 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  app:
+    build: .
+    container_name: recruitment-test-backend
+    ports:
+      - "4000:4000"
+    networks:
+      - recruitment-test
+    volumes:
+      - .:/code
+    env_file:
+      - .env
+    depends_on:
+      - database
+    stdin_open: true
+    tty: true
+
 volumes:
   pgdata: null
