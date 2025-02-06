@@ -14,4 +14,17 @@ defmodule RecruitmentTest.EnterpriseContext do
   end
 
   def get_total_enterprises, do: Repo.aggregate(Enterprise, :count, :id)
+
+  @spec create_enterprise(:string, :strting, :string, :string) :: {:ok, Enterprise} | {:error, Ecto.Changeset.t()}
+  def create_enterprise(name, commercial_name, description, cnpj) do
+    %Enterprise{}
+      |> Enterprise.changeset(%{
+          name: name,
+          commercial_name: commercial_name,
+          description: description,
+          cnpj: cnpj
+        })
+      |> Repo.insert()
+  end
+
 end

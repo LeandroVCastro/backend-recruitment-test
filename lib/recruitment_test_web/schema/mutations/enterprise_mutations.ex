@@ -1,0 +1,17 @@
+defmodule RecruitmentTestWeb.Schema.Mutations.EnterpriseMutations do
+  use Absinthe.Schema.Notation
+  alias RecruitmentTestWeb.Resolvers.EnterpriseResolver
+
+
+  object :enterprise_mutations do
+    description "Enterprise Queries"
+    field :create_enterprise, :get_enterprise_response do
+      description "Create a new Enterprise"
+      arg :name, non_null(:string)
+      arg :commercial_name, non_null(:string)
+      arg :description, non_null(:string)
+      arg :cnpj, non_null(:string)
+      resolve(&EnterpriseResolver.create_enterprise/3)
+    end
+  end
+end

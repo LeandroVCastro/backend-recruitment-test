@@ -1,6 +1,7 @@
 #!/bin/bash
 # Docker entrypoint script.
 cd /code
+mix setup
 
 # Wait until Postgres is ready
 while ! pg_isready -q -h $DATABASE_HOST -p $DATABASE_PORT -U $DATABASE_USER

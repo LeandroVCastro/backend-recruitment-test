@@ -14,4 +14,11 @@ defmodule RecruitmentTestWeb.Schema.ContentTypes.EnterpriseTypes do
   object :list_enterprise_response do
     field :items, list_of(:get_enterprise_response)
   end
+
+  input_object :create_enterprise_input do
+    field :name, :string
+    field :commercial_name, :string
+    field :cnpj, :string
+    field :description, :string
+  end
 end
