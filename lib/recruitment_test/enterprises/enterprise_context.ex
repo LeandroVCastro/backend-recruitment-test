@@ -1,6 +1,6 @@
 defmodule RecruitmentTest.EnterpriseContext do
   import Ecto.Query
-
+  require Logger
   alias RecruitmentTest.Repo
   alias RecruitmentTest.Enterprises.Enterprise
 
@@ -25,6 +25,21 @@ defmodule RecruitmentTest.EnterpriseContext do
           cnpj: cnpj
         })
       |> Repo.insert()
+  end
+
+  # @spec create_enterprise(:integer, :string, :strting, :string, :string) :: {:ok, Enterprise} | {:error, Ecto.Changeset.t()}
+  def update_enterprise(id, name, commercial_name, description, cnpj) do
+    case Repo.get(Enterprise, id) do
+      nil -> nil
+
+      enterprise -> enterprise |> Enterprise.changeset(%{
+          name: name,
+          commercial_name: commercial_name,
+          description: description,
+          cnpj: cnpj
+        })
+        |> Repo.update()
+    end
   end
 
 end

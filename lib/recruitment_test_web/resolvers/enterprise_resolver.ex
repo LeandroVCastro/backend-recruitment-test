@@ -2,7 +2,10 @@ defmodule RecruitmentTestWeb.Resolvers.EnterpriseResolver do
   alias RecruitmentTest.EnterpriseContext
 
   def get_enterprise(_, %{id: id}, _) do
-    {:ok, EnterpriseContext.get_enterprise(id)}
+    case EnterpriseContext.get_enterprise(id) do
+      nil -> {:error, "Enterprise not found"}
+      enterprise -> {:ok, enterprise}
+    end
   end
 
   def list_enterprises(_, args, _) do
@@ -25,7 +28,21 @@ defmodule RecruitmentTestWeb.Resolvers.EnterpriseResolver do
     cnpj = Map.get(args, :cnpj)
     case EnterpriseContext.create_enterprise(name, commercial_name, description, cnpj) do
       {:ok, enterprise} -> {:ok, enterprise}
-      {:error, changeset} -> {:error, "Error creating Enterprise: #{inspect(changeset.errors)}"}
+      {:error, changeset} -> {:error, "#{inspect(changeset.errors)}"}
+    end
+  end
+
+  # @spec create_enterprise(nil, map(), nil) :: {:error, :string} | {:ok, RecruitmentTest.Enterprises.Enterprise}
+  def update_enterprise(_, args, _) do
+    id = Map.get(args, :id)
+    name = Map.get(args, :name)
+    commercial_name = Map.get(args, :commercial_name)
+    description = Map.get(args, :description)
+    cnpj = Map.get(args, :cnpj)
+    case EnterpriseContext.update_enterprise(id, name, commercial_name, description, cnpj) do
+      {:ok, enterprise} -> {:ok, enterprise}
+      {:error, changeset} -> {:error, "#{inspect(changeset.errors)}"}
+      nil -> {:error, "Enterprise not found"}
     end
   end
 end

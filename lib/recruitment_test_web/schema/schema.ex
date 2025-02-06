@@ -8,12 +8,12 @@ defmodule RecruitmentTestWeb.Schema do
 
 
   query do
-    field :hello_word, :hello_world_queries
-    field :enterprise_queries, :enterprise_queries
+    import_fields(:hello_world_queries)
+    import_fields(:enterprise_queries)
   end
 
   mutation do
-    field :enterprise_mutations, :enterprise_mutations
+    import_fields(:enterprise_mutations)
   end
 
 end

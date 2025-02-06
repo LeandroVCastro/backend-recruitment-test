@@ -13,5 +13,15 @@ defmodule RecruitmentTestWeb.Schema.Mutations.EnterpriseMutations do
       arg :cnpj, non_null(:string)
       resolve(&EnterpriseResolver.create_enterprise/3)
     end
+
+    field :update_enterprise, :get_enterprise_response do
+      description "Update an Enterprise by ID"
+      arg :id, non_null(:id)
+      arg :name, non_null(:string)
+      arg :commercial_name, non_null(:string)
+      arg :description, non_null(:string)
+      arg :cnpj, non_null(:string)
+      resolve(&EnterpriseResolver.update_enterprise/3)
+    end
   end
 end
