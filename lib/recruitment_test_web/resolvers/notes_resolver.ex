@@ -1,10 +1,10 @@
 defmodule RecruitmentTestWeb.Resolvers.NoteResolver do
   alias RecruitmentTest.NoteContext
 
-  # def get_enterprise(_, %{id: id}, _) do
-  #   case EnterpriseContext.get_enterprise(id) do
-  #     nil -> {:error, "Enterprise not found"}
-  #     enterprise -> {:ok, enterprise}
+  # def get_note(_, %{id: id}, _) do
+  #   case NoteContext.get_note(id) do
+  #     nil -> {:error, "Note not found"}
+  #     note -> {:ok, note}
   #   end
   # end
 
@@ -41,13 +41,13 @@ defmodule RecruitmentTestWeb.Resolvers.NoteResolver do
     end
   end
 
-  # @spec delete_enterprise(nil, map(), nil) :: {:error, binary()} | {:ok, %{success: true}}
-  # def delete_enterprise(_, args, _) do
-  #   id = Map.get(args, :id)
-  #   case EnterpriseContext.delete_enterprise(id) do
-  #     {:ok, _} -> {:ok, %{success: true}}
-  #     {:error, changeset} -> {:error, "#{inspect(changeset.errors)}"}
-  #     nil -> {:error, "Enterprise not found"}
-  #   end
-  # end
+  @spec delete_note(nil, map(), nil) :: {:error, binary()} | {:ok, %{success: true}}
+  def delete_note(_, args, _) do
+    id = Map.get(args, :id)
+    case NoteContext.delete_note(id) do
+      {:ok, _} -> {:ok, %{success: true}}
+      {:error, changeset} -> {:error, "#{inspect(changeset.errors)}"}
+      nil -> {:error, "Note not found"}
+    end
+  end
 end

@@ -10,17 +10,17 @@ defmodule RecruitmentTest.NoteContext do
     Repo.get(query, id)
   end
 
-  # @spec delete_enterprise(:integer) :: {:ok, Enterprise} | {:error, Ecto.Changeset.t()} | nil
-  # def delete_enterprise(id) do
-  #   case get_enterprise(id) do
-  #     nil -> nil
+  @spec delete_note(:id) :: {:ok, Note} | {:error, Ecto.Changeset.t()} | nil
+  def delete_note(id) do
+    case get_note(id) do
+      nil -> nil
 
-  #     enterprise -> enterprise |> Enterprise.changeset(%{
-  #         deleted_at: DateTime.utc_now()
-  #       })
-  #       |> Repo.update()
-  #   end
-  # end
+      note_record -> note_record |> Note.changeset(%{
+          deleted_at: DateTime.utc_now()
+        })
+        |> Repo.update()
+    end
+  end
 
   # def list_enterprises(offset, limit) do
   #   query = from e in Enterprise,

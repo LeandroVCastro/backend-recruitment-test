@@ -19,10 +19,10 @@ defmodule RecruitmentTestWeb.Schema.Mutations.NoteMutations do
       resolve(&NoteResolver.update_note/3)
     end
 
-    # field :delete_enterprise, :delete_enterprise_response do
-    #   description "Delete an Enterprise by ID"
-    #   arg :id, non_null(:id)
-    #   resolve(&EnterpriseResolver.delete_enterprise/3)
-    # end
+    field :delete_note, :delete_note_response do
+      description "Delete an Note by ID"
+      arg :id, non_null(:id)
+      resolve(&NoteResolver.delete_note/3)
+    end
   end
 end
