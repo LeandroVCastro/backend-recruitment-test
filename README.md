@@ -71,13 +71,22 @@ Please contact us by email at `tecnologia@hubscontabilidade.com.br`. We do not p
 
 ## How to run
 
-#### Running
+### Is it your first time running this project?
+
+```bash
+# You just need to run this command on the first time
+cp .env.example .env
+```
+
+#### Starting
+
+Now everything is ready, you just need to run the following command
 
 ```bash
 docker compose up --build
 ```
 
-#### Stopping
+#### Stopping the container
 
 ```bash
 docker compose down

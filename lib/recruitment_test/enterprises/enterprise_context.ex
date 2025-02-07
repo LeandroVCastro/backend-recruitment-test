@@ -4,16 +4,37 @@ defmodule RecruitmentTest.EnterpriseContext do
   alias RecruitmentTest.Repo
   alias RecruitmentTest.Enterprises.Enterprise
 
-  def get_enterprise(id), do: Repo.get(Enterprise, id)
+  def get_enterprise(id) do
+    query = from e in Enterprise,
+          where: is_nil(e.deleted_at)
+    Repo.get(query, id)
+  end
+
+  @spec delete_enterprise(:integer) :: {:ok, Enterprise} | {:error, Ecto.Changeset.t()} | nil
+  def delete_enterprise(id) do
+    case get_enterprise(id) do
+      nil -> nil
+
+      enterprise -> enterprise |> Enterprise.changeset(%{
+          deleted_at: DateTime.utc_now()
+        })
+        |> Repo.update()
+    end
+  end
 
   def list_enterprises(offset, limit) do
     query = from e in Enterprise,
+          where: is_nil(e.deleted_at),
           offset: ^offset,
           limit: ^limit
     Repo.all(query)
   end
 
-  def get_total_enterprises, do: Repo.aggregate(Enterprise, :count, :id)
+  def get_total_enterprises do
+    query = from e in Enterprise,
+            where: is_nil(e.deleted_at)
+    Repo.aggregate(query, :count, :id)
+  end
 
   @spec create_enterprise(:string, :strting, :string, :string) :: {:ok, Enterprise} | {:error, Ecto.Changeset.t()}
   def create_enterprise(name, commercial_name, description, cnpj) do
@@ -27,9 +48,9 @@ defmodule RecruitmentTest.EnterpriseContext do
       |> Repo.insert()
   end
 
-  # @spec create_enterprise(:integer, :string, :strting, :string, :string) :: {:ok, Enterprise} | {:error, Ecto.Changeset.t()}
+  @spec update_enterprise(:integer, :string, :strting, :string, :string) :: {:ok, Enterprise} | {:error, Ecto.Changeset.t()} | nil
   def update_enterprise(id, name, commercial_name, description, cnpj) do
-    case Repo.get(Enterprise, id) do
+    case get_enterprise(id) do
       nil -> nil
 
       enterprise -> enterprise |> Enterprise.changeset(%{

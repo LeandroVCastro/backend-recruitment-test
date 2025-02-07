@@ -23,5 +23,11 @@ defmodule RecruitmentTestWeb.Schema.Mutations.EnterpriseMutations do
       arg :cnpj, non_null(:string)
       resolve(&EnterpriseResolver.update_enterprise/3)
     end
+
+    field :delete_enterprise, :delete_enterprise_response do
+      description "Delete an Enterprise by ID"
+      arg :id, non_null(:id)
+      resolve(&EnterpriseResolver.delete_enterprise/3)
+    end
   end
 end

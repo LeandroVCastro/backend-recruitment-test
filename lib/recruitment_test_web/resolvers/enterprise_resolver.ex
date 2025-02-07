@@ -45,4 +45,14 @@ defmodule RecruitmentTestWeb.Resolvers.EnterpriseResolver do
       nil -> {:error, "Enterprise not found"}
     end
   end
+
+  @spec delete_enterprise(nil, map(), nil) :: {:error, binary()} | {:ok, %{success: true}}
+  def delete_enterprise(_, args, _) do
+    id = Map.get(args, :id)
+    case EnterpriseContext.delete_enterprise(id) do
+      {:ok, _} -> {:ok, %{success: true}}
+      {:error, changeset} -> {:error, "#{inspect(changeset.errors)}"}
+      nil -> {:error, "Enterprise not found"}
+    end
+  end
 end

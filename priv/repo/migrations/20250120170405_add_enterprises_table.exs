@@ -9,7 +9,7 @@ defmodule RecruitmentTest.Repo.Migrations.AddEnterprisesTable do
       add :description, :string, null: false
 
       timestamps()
-      # soft_delete_columns()
+      add :deleted_at, :utc_datetime
     end
 
     create unique_index(:enterprises, [:cnpj])

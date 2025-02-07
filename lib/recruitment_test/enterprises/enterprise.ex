@@ -8,6 +8,7 @@ defmodule RecruitmentTest.Enterprises.Enterprise do
     field :commercial_name, :string
     field :cnpj, :string
     field :description, :string
+    field :deleted_at, :utc_datetime
 
     timestamps()
   end
@@ -19,12 +20,14 @@ defmodule RecruitmentTest.Enterprises.Enterprise do
       :name,
       :commercial_name,
       :cnpj,
-      :description
+      :description,
+      :deleted_at
     ])
     |> handle_name()
     |> handle_commercial_name()
     |> handle_cnpj()
     |> handle_description()
+    |> handle_deleted_at()
   end
 
   defp handle_name(changeset) do
@@ -51,6 +54,10 @@ defmodule RecruitmentTest.Enterprises.Enterprise do
     changeset
     |> validate_required(:description)
     |> validate_length(:description, max: 250)
+  end
+
+  defp handle_deleted_at(changeset) do
+    changeset
   end
 
   defp numbers_only(value) do

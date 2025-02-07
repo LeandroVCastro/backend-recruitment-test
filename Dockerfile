@@ -3,7 +3,7 @@ FROM elixir:1.17
 
 # Install basic packages
 RUN apt-get update
-RUN apt-get install -y postgresql-client ncurses-dev imagemagick libc-dev openssh-server git gcc inotify-tools
+RUN apt-get install -y nano postgresql-client ncurses-dev imagemagick libc-dev openssh-server git gcc inotify-tools
 
 # Install hex package manager
 RUN mix local.hex --force
