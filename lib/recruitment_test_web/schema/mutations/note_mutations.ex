@@ -5,14 +5,14 @@ defmodule RecruitmentTestWeb.Schema.Mutations.NoteMutations do
 
   object :note_mutations do
     description "Note Queries"
-    field :create_note, :get_note_response do
+    field :create_note, :create_note_response do
       description "Add a note to an Enterprise"
       arg :note, non_null(:string)
       arg :enterprise_id, non_null(:id)
       resolve(&NoteResolver.create_note/3)
     end
 
-    field :update_note, :get_note_response do
+    field :update_note, :create_note_response do
       description "Update an Note by ID"
       arg :id, non_null(:id)
       arg :note, non_null(:string)
