@@ -22,19 +22,14 @@ defmodule RecruitmentTest.NoteContext do
     end
   end
 
-  # def list_enterprises(offset, limit) do
-  #   query = from e in Enterprise,
-  #         where: is_nil(e.deleted_at),
-  #         offset: ^offset,
-  #         limit: ^limit
-  #   Repo.all(query)
-  # end
+  def list_notes_by_enterprise_id(enterprise_id) do
+    query = from e in Note,
+          where: is_nil(e.deleted_at),
+          where: e.enterprise_id == ^enterprise_id,
+          order_by: [desc: :updated_at]
 
-  # def get_total_enterprises do
-  #   query = from e in Enterprise,
-  #           where: is_nil(e.deleted_at)
-  #   Repo.aggregate(query, :count, :id)
-  # end
+    Repo.all(query)
+  end
 
   @spec create_note(:string, :id) :: {:ok, Note} | {:error, Ecto.Changeset.t()} | nil
   def create_note(note, enterprise_id) do

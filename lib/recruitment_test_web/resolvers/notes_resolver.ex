@@ -1,24 +1,12 @@
 defmodule RecruitmentTestWeb.Resolvers.NoteResolver do
   alias RecruitmentTest.NoteContext
 
-  # def get_note(_, %{id: id}, _) do
-  #   case NoteContext.get_note(id) do
-  #     nil -> {:error, "Note not found"}
-  #     note -> {:ok, note}
-  #   end
-  # end
-
-  # def list_enterprises(_, args, _) do
-  #   offset = Map.get(args, :offset)
-  #   limit = Map.get(args, :limit)
-  #   enterprises = EnterpriseContext.list_enterprises(offset, limit)
-  #   enterprises_map = Enum.map(enterprises, &Map.from_struct(&1))
-  #   {:ok, %{items: enterprises_map}}
-  # end
-
-  # def get_total_enterprises(_, _, _) do
-  #   {:ok, EnterpriseContext.get_total_enterprises()}
-  # end
+  def list_notes_by_enterprise_id(_, args, _) do
+    enterprise_id = Map.get(args, :enterprise_id)
+    notes = NoteContext.list_notes_by_enterprise_id(enterprise_id)
+    notes = Enum.map(notes, &Map.from_struct(&1))
+    {:ok, notes}
+  end
 
   @spec create_note(nil, map(), nil) :: {:error, :string} | {:ok, RecruitmentTest.Notes.Note}
   def create_note(_, args, _) do
