@@ -32,7 +32,6 @@ defmodule RecruitmentTestWeb.Resolvers.EnterpriseResolver do
     end
   end
 
-  # @spec create_enterprise(nil, map(), nil) :: {:error, :string} | {:ok, RecruitmentTest.Enterprises.Enterprise}
   def update_enterprise(_, args, _) do
     id = Map.get(args, :id)
     name = Map.get(args, :name)

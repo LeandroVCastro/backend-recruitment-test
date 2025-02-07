@@ -31,19 +31,15 @@ defmodule RecruitmentTestWeb.Resolvers.NoteResolver do
     end
   end
 
-  # @spec create_enterprise(nil, map(), nil) :: {:error, :string} | {:ok, RecruitmentTest.Enterprises.Enterprise}
-  # def update_enterprise(_, args, _) do
-  #   id = Map.get(args, :id)
-  #   name = Map.get(args, :name)
-  #   commercial_name = Map.get(args, :commercial_name)
-  #   description = Map.get(args, :description)
-  #   cnpj = Map.get(args, :cnpj)
-  #   case EnterpriseContext.update_enterprise(id, name, commercial_name, description, cnpj) do
-  #     {:ok, enterprise} -> {:ok, enterprise}
-  #     {:error, changeset} -> {:error, "#{inspect(changeset.errors)}"}
-  #     nil -> {:error, "Enterprise not found"}
-  #   end
-  # end
+  def update_note(_, args, _) do
+    note = Map.get(args, :note)
+    id = Map.get(args, :id)
+    case NoteContext.update_note(note, id) do
+      {:ok, note_record} -> {:ok, note_record}
+      {:error, changeset} -> {:error, "#{inspect(changeset.errors)}"}
+      nil -> {:error, "Note not found"}
+    end
+  end
 
   # @spec delete_enterprise(nil, map(), nil) :: {:error, binary()} | {:ok, %{success: true}}
   # def delete_enterprise(_, args, _) do

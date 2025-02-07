@@ -12,15 +12,12 @@ defmodule RecruitmentTestWeb.Schema.Mutations.NoteMutations do
       resolve(&NoteResolver.create_note/3)
     end
 
-    # field :update_enterprise, :get_enterprise_response do
-    #   description "Update an Enterprise by ID"
-    #   arg :id, non_null(:id)
-    #   arg :name, non_null(:string)
-    #   arg :commercial_name, non_null(:string)
-    #   arg :description, non_null(:string)
-    #   arg :cnpj, non_null(:string)
-    #   resolve(&EnterpriseResolver.update_enterprise/3)
-    # end
+    field :update_note, :get_note_response do
+      description "Update an Note by ID"
+      arg :id, non_null(:id)
+      arg :note, non_null(:string)
+      resolve(&NoteResolver.update_note/3)
+    end
 
     # field :delete_enterprise, :delete_enterprise_response do
     #   description "Delete an Enterprise by ID"

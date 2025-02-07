@@ -52,19 +52,16 @@ defmodule RecruitmentTest.NoteContext do
 
   end
 
-  # @spec update_enterprise(:integer, :string, :string, :string, :string) :: {:ok, Enterprise} | {:error, Ecto.Changeset.t()} | nil
-  # def update_enterprise(id, name, commercial_name, description, cnpj) do
-  #   case get_enterprise(id) do
-  #     nil -> nil
+  @spec update_note(:string, :id) :: {:ok, Note} | {:error, Ecto.Changeset.t()} | nil
+  def update_note(note, id) do
+    case get_note(id) do
+      nil -> nil
 
-  #     enterprise -> enterprise |> Enterprise.changeset(%{
-  #         name: name,
-  #         commercial_name: commercial_name,
-  #         description: description,
-  #         cnpj: cnpj
-  #       })
-  #       |> Repo.update()
-  #   end
-  # end
+      note_record -> note_record |> Note.changeset(%{
+          note: note,
+        })
+        |> Repo.update()
+    end
+  end
 
 end
