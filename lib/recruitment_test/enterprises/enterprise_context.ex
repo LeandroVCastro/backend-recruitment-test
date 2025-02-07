@@ -1,6 +1,5 @@
 defmodule RecruitmentTest.EnterpriseContext do
   import Ecto.Query
-  require Logger
   alias RecruitmentTest.Repo
   alias RecruitmentTest.Enterprises.Enterprise
 
@@ -10,7 +9,7 @@ defmodule RecruitmentTest.EnterpriseContext do
     Repo.get(query, id)
   end
 
-  @spec delete_enterprise(:integer) :: {:ok, Enterprise} | {:error, Ecto.Changeset.t()} | nil
+  @spec delete_enterprise(:id) :: {:ok, Enterprise} | {:error, Ecto.Changeset.t()} | nil
   def delete_enterprise(id) do
     case get_enterprise(id) do
       nil -> nil
@@ -36,7 +35,7 @@ defmodule RecruitmentTest.EnterpriseContext do
     Repo.aggregate(query, :count, :id)
   end
 
-  @spec create_enterprise(:string, :strting, :string, :string) :: {:ok, Enterprise} | {:error, Ecto.Changeset.t()}
+  @spec create_enterprise(:string, :string, :string, :string) :: {:ok, Enterprise} | {:error, Ecto.Changeset.t()}
   def create_enterprise(name, commercial_name, description, cnpj) do
     %Enterprise{}
       |> Enterprise.changeset(%{
@@ -48,7 +47,7 @@ defmodule RecruitmentTest.EnterpriseContext do
       |> Repo.insert()
   end
 
-  @spec update_enterprise(:integer, :string, :strting, :string, :string) :: {:ok, Enterprise} | {:error, Ecto.Changeset.t()} | nil
+  @spec update_enterprise(:id, :string, :string, :string, :string) :: {:ok, Enterprise} | {:error, Ecto.Changeset.t()} | nil
   def update_enterprise(id, name, commercial_name, description, cnpj) do
     case get_enterprise(id) do
       nil -> nil

@@ -5,6 +5,8 @@ defmodule RecruitmentTestWeb.Schema do
   import_types(RecruitmentTestWeb.Schema.ContentTypes.EnterpriseTypes)
   import_types(RecruitmentTestWeb.Schema.Queries.EnterpriseQueries)
   import_types(RecruitmentTestWeb.Schema.Mutations.EnterpriseMutations)
+  import_types(RecruitmentTestWeb.Schema.ContentTypes.NoteTypes)
+  import_types(RecruitmentTestWeb.Schema.Mutations.NoteMutations)
 
 
   query do
@@ -14,6 +16,7 @@ defmodule RecruitmentTestWeb.Schema do
 
   mutation do
     import_fields(:enterprise_mutations)
+    import_fields(:note_mutations)
   end
 
 end
