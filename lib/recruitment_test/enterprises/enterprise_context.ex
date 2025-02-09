@@ -24,6 +24,7 @@ defmodule RecruitmentTest.EnterpriseContext do
   def list_enterprises(offset, limit) do
     query = from e in Enterprise,
           where: is_nil(e.deleted_at),
+          order_by: [desc: :updated_at],
           offset: ^offset,
           limit: ^limit
     Repo.all(query)
