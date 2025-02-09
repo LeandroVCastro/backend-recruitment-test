@@ -1,6 +1,6 @@
 defmodule RecruitmentTestWeb.Resolvers.EnterpriseResolver do
   alias RecruitmentTest.EnterpriseContext
-
+  import Ecto.Changeset
   def get_enterprise(_, %{id: id}, _) do
     case EnterpriseContext.get_enterprise(id) do
       nil -> {:error, "Enterprise not found"}
@@ -28,7 +28,12 @@ defmodule RecruitmentTestWeb.Resolvers.EnterpriseResolver do
     cnpj = Map.get(args, :cnpj)
     case EnterpriseContext.create_enterprise(name, commercial_name, description, cnpj) do
       {:ok, enterprise} -> {:ok, enterprise}
-      {:error, changeset} -> {:error, "#{inspect(changeset.errors)}"}
+      {:error, changeset} -> {:error, message: traverse_errors(changeset, fn {msg, opts} ->
+        Regex.replace(~r"%{(\w+)}", msg, fn _, key ->
+          opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
+        end)
+      end)}
+      # {:error, changeset} -> {:error, "#{inspect(changeset.errors)}"}
     end
   end
 
@@ -40,7 +45,11 @@ defmodule RecruitmentTestWeb.Resolvers.EnterpriseResolver do
     cnpj = Map.get(args, :cnpj)
     case EnterpriseContext.update_enterprise(id, name, commercial_name, description, cnpj) do
       {:ok, enterprise} -> {:ok, enterprise}
-      {:error, changeset} -> {:error, "#{inspect(changeset.errors)}"}
+      {:error, changeset} -> {:error, message: traverse_errors(changeset, fn {msg, opts} ->
+        Regex.replace(~r"%{(\w+)}", msg, fn _, key ->
+          opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
+        end)
+      end)}
       nil -> {:error, "Enterprise not found"}
     end
   end
@@ -50,7 +59,11 @@ defmodule RecruitmentTestWeb.Resolvers.EnterpriseResolver do
     id = Map.get(args, :id)
     case EnterpriseContext.delete_enterprise(id) do
       {:ok, _} -> {:ok, %{success: true}}
-      {:error, changeset} -> {:error, "#{inspect(changeset.errors)}"}
+      {:error, changeset} -> {:error, message: traverse_errors(changeset, fn {msg, opts} ->
+        Regex.replace(~r"%{(\w+)}", msg, fn _, key ->
+          opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
+        end)
+      end)}
       nil -> {:error, "Enterprise not found"}
     end
   end

@@ -1,5 +1,6 @@
 defmodule RecruitmentTestWeb.Resolvers.NoteResolver do
   alias RecruitmentTest.NoteContext
+  import Ecto.Changeset
 
   def list_notes_by_enterprise_id(_, args, _) do
     enterprise_id = Map.get(args, :enterprise_id)
@@ -14,7 +15,11 @@ defmodule RecruitmentTestWeb.Resolvers.NoteResolver do
     enterprise_id = Map.get(args, :enterprise_id)
     case NoteContext.create_note(note, enterprise_id) do
       {:ok, noteRecord} -> {:ok, noteRecord}
-      {:error, changeset} -> {:error, "#{inspect(changeset.errors)}"}
+      {:error, changeset} -> {:error, message: traverse_errors(changeset, fn {msg, opts} ->
+        Regex.replace(~r"%{(\w+)}", msg, fn _, key ->
+          opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
+        end)
+      end)}
       nil -> {:error, "Enterprise not found"}
     end
   end
@@ -24,7 +29,11 @@ defmodule RecruitmentTestWeb.Resolvers.NoteResolver do
     id = Map.get(args, :id)
     case NoteContext.update_note(note, id) do
       {:ok, note_record} -> {:ok, note_record}
-      {:error, changeset} -> {:error, "#{inspect(changeset.errors)}"}
+      {:error, changeset} -> {:error, message: traverse_errors(changeset, fn {msg, opts} ->
+        Regex.replace(~r"%{(\w+)}", msg, fn _, key ->
+          opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
+        end)
+      end)}
       nil -> {:error, "Note not found"}
     end
   end
@@ -34,7 +43,11 @@ defmodule RecruitmentTestWeb.Resolvers.NoteResolver do
     id = Map.get(args, :id)
     case NoteContext.delete_note(id) do
       {:ok, _} -> {:ok, %{success: true}}
-      {:error, changeset} -> {:error, "#{inspect(changeset.errors)}"}
+      {:error, changeset} -> {:error, message: traverse_errors(changeset, fn {msg, opts} ->
+        Regex.replace(~r"%{(\w+)}", msg, fn _, key ->
+          opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
+        end)
+      end)}
       nil -> {:error, "Note not found"}
     end
   end
